@@ -16,10 +16,8 @@ from rich.table import Table
 from typing import Iterable
 import ray
 
-DEFAULT_PLOTLY_COLORS=['rgb(31, 119, 180)', 'rgb(255, 127, 14)',
-                       'rgb(44, 160, 44)', 'rgb(214, 39, 40)',
-                       'rgb(148, 103, 189)', 'rgb(140, 86, 75)',
-                       'rgb(227, 119, 194)', 'rgb(127, 127, 127)',
+DEFAULT_PLOTLY_COLORS=['rgb(31, 119, 180)', 'rgb(255, 127, 14)', 'rgb(44, 160, 44)', 'rgb(214, 39, 40)',
+                       'rgb(148, 103, 189)', 'rgb(140, 86, 75)', 'rgb(227, 119, 194)', 'rgb(127, 127, 127)',
                        'rgb(188, 189, 34)', 'rgb(23, 190, 207)']*10
 DEFAULT_PLOTLY_COLORS_BACK=['rgba(31, 119, 180,0.2)', 'rgba(255, 127, 14,0.2)',
                        'rgba(44, 160, 44,0.2)', 'rgba(214, 39, 40,0.2)',
@@ -29,83 +27,61 @@ DEFAULT_PLOTLY_COLORS_BACK=['rgba(31, 119, 180,0.2)', 'rgba(255, 127, 14,0.2)',
 
 class NN(nn.Module):
     """
-    This class is a subclass of nn.Module and is a general class for defining function approximators in the RL problems.
+    This is a Neural Network module. It contains the definition of function approximators in the RL problems
 
     Args:
-        input_dim (int): dimension of the input, states, tensor.
-        output_dim (int): dimension of the output tensor.
-        hidden_dim (int): dimension of each hidden layer, defults to 20.
-        activation : Type of the activation layer. Usually nn.Relu or nn.Tanh.
-        n_hidden (int): number of hidden layers in the neural network.
+        input_dim (int): It has the dimensions of input, states, tensor
+        output_dim (int): It has the dimension of the output tensor
+        hidden_dim (int): It has the dimension of each hidden layer, default is 20
+        activation : It is the activation layer. We have used nn.ReLU
+        n_hidden (int): number of hidden layers in the NN (We have set it to 10)
 
     """
-    def __init__(self,input_dim:int,output_dim:int,hidden_dim:int=20,activation=nn.ReLU,n_hidden:int=8)-> None:
+    def __init__(self,input_dim, output_dim, hidden_dim=20, activation=nn.ReLU, n_hidden=8):
         super(NN,self).__init__()
-        self.inlayer=nn.Sequential(nn.Linear(input_dim,hidden_dim),activation())
-        self.hidden=nn.Sequential(*[nn.Linear(hidden_dim,hidden_dim),activation()]*n_hidden)
-        self.output=nn.Linear(hidden_dim,output_dim)
+        self.inlayer = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            activation()
+        )
 
-    def forward(self, obs:torch.FloatTensor)-> torch.FloatTensor:
+        self.hidden = nn.Sequential(*[
+            nn.Linear(hidden_dim, hidden_dim),
+            activation()
+        ] for _ in range(n_hidden))  # Repeat n_hidden times
+
+        self.output = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, obs):
         out=self.inlayer(obs)
         out=self.hidden(out)
         out=self.output(out)
         return out
 
 class Agent:
-    """ An object of this class defines an agent in the environment. At the core of an agent lies a COBRA model.
-        Also the observable environment states are needed to be defined for an agent. Additionally, it should be defined what
-        reactions an agent have control over.
+    """ 
+    This defines an agent in the environment. The core of an agent is essentially a COBRA model
+    Observed environment states need to be known for an agent
+    Also, the set of reactions that the agent can manipulate
 
+    Args:
+        name (str): A name given to an agent.
+        model (cobra.Model): A cobra model describing the metabolism of the agent. In our case iJO1366
+        actor_network (NN): The neural network class, policy function module, to be used for the actor network
+        critic_network (NN): The neural network class, value function module, to be used for the critic network
+        optimizer_critic (torch.optim.Adam): The Adam optimizer for tuning the critic network
+        optimizer_actor (torch.optim.Adam): The Adam optimizer for tuning the actor network
+        actions (list): list of reaction names that the agent has control over
+        observables (list): list of the names of metabolites surrounding the agent
+        clip (float): gradient clipping threshhold in PPO algorithm
+        actor_var (float): Amount of exploration in the actor network
+        grad_updates (int): Number of steps of gradient decent in each training step
+        lr_actor (float) : The learning rate for the actor network
+        lr_critic (float) : The learning rate for the critic network
 
-        Args:
-            name (str): A descriptive name given to an agent.
-            model (cobra.Model): A cobra model describing the metabolism of the agent.
-            actor_network (NN): The neural network class, pyTorch, to be used for the actor network.
-            critic_network (NN): The neural network class, pyTorch, to be used for the critic network.
-            optimizer_critic (torch.optim.Adam): The Adam optimizer class used for tuning the critic network parameters.
-            optimizer_actor (torch.optim.Adam): The Adam optimizer class used for tuning the actor network parameters.
-            actions (list): list of reaction names that the agent has control over. The reactions should exist in the cobra model.
-            observables (list): list of the names of metabolites that the agents can sense from the environment.
-            clip (float): gradient clipping threshhold that is used in PPO algorithm
-            actor_var (float): Amount of variance in the actor network suggestions. For exploration purpose.
-            grad_updates (int): How many steps of gradient decent is performed in each training step
-            lr_actor (float) : The learning rate for the actor network
-            lr_critic (float) : The learning rate for the critic network
-
-        Examples:
-            >>> from spamdfba import toymodels as tm
-            >>> from spamdfba import toolkit as tk
-            >>> agent1=tk.Agent("agent1",
-                model=tm.ToyModel_SA.copy(),
-                actor_network=tk.NN,
-                critic_network=tk.NN,
-                clip=0.1,
-                lr_actor=0.0001,
-                lr_critic=0.001,
-                grad_updates=4,
-                optimizer_actor=torch.optim.Adam,
-                optimizer_critic=torch.optim.Adam,
-                observables=['agent1','agent2' ,'Glc', 'Starch'],
-                actions=["Amylase_e"],
-                gamma=1,
-                )
     """
-    def __init__(self,
-                name:str,
-                model:cobra.Model,
-                actor_network:NN,
-                critic_network:NN,
-                optimizer_critic:torch.optim.Adam,
-                optimizer_actor:torch.optim.Adam,
-                actions:list[str],
-                observables:list[str],
-                gamma:float,
-                clip:float=0.01,
-                actor_var:float=0.1,
-                grad_updates:int=1,
-                lr_actor:float=0.001,
-                lr_critic:float=0.001,
-                ) -> None:
+    def __init__(self, name, model, actor_network, critic_network, optimizer_critic, optimizer_actor,
+                actions, observables, gamma, clip=0.01, actor_var=0.1, grad_updates=1, lr_actor=0.001,
+                lr_critic=0.001):
 
         self.name = name
         self.model = model
@@ -128,136 +104,62 @@ class Agent:
 
     def get_actions(self,observation:np.ndarray):
         """
-        This method will draw the actions from a normal distribution around the actor netwrok prediction.
-        The derivatives are not calculated here.
+        This method will draw the actions from a normal distribution around the actor network prediction
         """
         mean = self.actor_network_(torch.tensor(observation, dtype=torch.float32)).detach()
-        # dist = MultivariateNormal(mean, self.actor_var)(mean, self.cov_mat)
         dist = Normal(mean, self.actor_var)
         action = dist.sample()
-        log_prob =torch.sum(dist.log_prob(action))        # log_prob = dist.log_prob(action)
+        log_prob =torch.sum(dist.log_prob(action))
         return action.detach().numpy(), log_prob
 
     def evaluate(self, batch_obs:np.ndarray ,batch_acts:np.ndarray):
         """
-        Calculates the value of the states, as well as the log probability af the actions that are taken.
-        The derivatives are calculated here.
+        Calculates the value of the states, as well as the log probability of the actions taken
         """
         V = self.critic_network_(batch_obs).squeeze()
         mean = self.actor_network_(batch_obs)
-        # dist = MultivariateNormal(mean, self.cov_mat)
         dist = Normal(mean, self.actor_var)
         log_probs = torch.sum(dist.log_prob(batch_acts),dim=1)
 
         return V, log_probs
 
     def compute_rtgs(self, batch_rews:list):
-        """Given a batch of rewards , it calculates the discouted return for each state for that batch"""
+        """
+        Given a batch of rewards , it calculates the discouted return for each state for that batch
+        """
 
         batch_rtgs = []
 
         for ep_rews in reversed(batch_rews):
-            discounted_reward = 0 # The discounted reward so far
+            discounted_reward = 0
             for rew in reversed(ep_rews):
                 discounted_reward = rew + discounted_reward * self.gamma
                 batch_rtgs.insert(0, discounted_reward)
-
-		# Convert the rewards-to-go into a tensor
         batch_rtgs = torch.tensor(batch_rtgs, dtype=torch.float)
 
         return batch_rtgs
 
 class Environment:
-    """ An environment is a collection of the following:
-        Agents: a list of objects of class Agent, defined below.
-        extracellular reactions: a list of dictionaries that describes reaction that happens outside of cells.
-        An example of such reactins is reactions catalyzed by extracellular enzymes. This list should look like this:
-        [{"reaction":{
-            "a":1,
-            "b":-1,
-            "c":1
-        },
-        "kinetics": (lambda x,y: x*y,("a","b")),))},...]
+    """ 
+    An environment is a collection of agents and extracellular reactions
 
-        Args:
-            name (str): A descriptive name for the environment
-            agents (Iterable): An iterable object like list or tuple including the collection of the agents to be used in the environment.
-            extracellular_reactions (Iterable): An iterable object consisting of a collection of extracellular reactions defined as above.
-            initial_condition (dict): A dictionary describing the initial concentration of all species in the environment to be used in the beginning
-            of each state
-            inlet_conditions (dict): A dictionary describing the inlet concentration of all species in the environment to be used in the beginning
-            of each state. This is important when simulating continuous bioreactors as the concentration of the inlet stream should be taken into account.
-            number_of_batches (int): Determines how many batches are performed in a simulation
-            dt (float): Specifies the time step for DFBA calculations
-            dilution_rate (float): The dilution rate of the bioreactor in per hour unit.
-            episodes_per_batch (int): Determines how many episodes should be executed with same actor function in parallel (policy evaluation)
-            episode_length (int): Determines how many time points exists within a given episode.
-            training (bool): Whether to run in training mode. If false, no training happens.
-            constant (list): A list of components that we want to hold their concentration constant during the simulations.
+    Args:
+        name (str): A name for the environment
+        agents (Iterable): An object including the collection of the agents used in the environment
+        extracellular_reactions (Iterable): An object consisting of a collection of extracellular reactions
+        initial_condition (dict): A dictionary describing the initial concentration of all species in the environment of each state
+        inlet_conditions (dict): A dictionary describing the inlet concentration of all species in the environment of each state
+        number_of_batches (int): Number of batches performed in a simulation
+        dt (float): Specifies the time step for DFBA calculations
+        dilution_rate (float): The dilution rate of the bioreactor
+        episodes_per_batch (int): Number of episodes executed with same actor function in parallel
+        episode_length (int): Number of time points existing within a given episode
+        training (bool): Whether to run in training mode. If false, no training happens
+        constant (list): A list of components that we want to hold their concentration constant during the simulations
 
-        Examples:
-            >>> from spamdfba import toymodels as tm
-            >>> from spamdfba import toolkit as tk
-            >>> agent1=tk.Agent("agent1",
-                model=tm.ToyModel_SA.copy(),
-                actor_network=tk.NN,
-                critic_network=tk.NN,
-                clip=0.1,
-                lr_actor=0.0001,
-                lr_critic=0.001,
-                grad_updates=4,
-                optimizer_actor=torch.optim.Adam,
-                optimizer_critic=torch.optim.Adam,
-                observables=['agent1','agent2' ,'Glc', 'Starch'],
-                actions=["Amylase_e"],
-                gamma=1,
-                )
-            >>> agent2=tk.Agent("agent2",
-                model=tm.ToyModel_SA.copy(),
-                actor_network=tk.NN,
-                critic_network=tk.NN,
-                clip=0.1,
-                lr_actor=0.0001,
-                lr_critic=0.001,
-                grad_updates=4,
-                optimizer_actor=torch.optim.Adam,
-                optimizer_critic=torch.optim.Adam,
-                observables=['agent1','agent2', 'Glc', 'Starch'],
-                actions=["Amylase_e"],
-                gamma=1,
-                )
-            >>> agents=[agent1,agent2]
-
-            >>> env=tk.Environment(name="Toy-Exoenzyme-Two-agents",
-                    agents=agents,
-                    dilution_rate=0.0001,
-                    initial_condition={"Glc":100,"agent1":0.1,"agent2":0.1,"Starch":10},
-                    inlet_conditions={"Starch":10},
-                    extracellular_reactions=[{"reaction":{
-                    "Glc":10,
-                    "Starch":-0.1,},
-                    "kinetics": (tk.general_kinetic,("Glc","Amylase"))}],
-                           dt=0.1,
-                           number_of_batches=1000,
-                           episodes_per_batch=int(NUM_CORES/2),
-                           )
     """
-    def __init__(self,
-                name:str,
-                agents:Iterable,
-                extracellular_reactions:Iterable[dict],
-                initial_condition:dict,
-                inlet_conditions:dict,
-                number_of_batches:int=100,
-                dt:float=0.1,
-                dilution_rate:float=0.05,
-                episodes_per_batch:int=10,
-                episode_length:int=1000,
-                training:bool=True,
-                constant:list=[]
-
-
-                ) -> None:
+    def __init__(self, name, agents, extracellular_reactions, initial_condition, inlet_conditions, number_of_batches=100,
+                 dt=0.1, dilution_rate=0.05, episodes_per_batch=10, episode_length=1000, training=True, constant=[]):
         self.name=name
         self.agents = agents
         self.num_agents = len(agents)
@@ -281,33 +183,33 @@ class Environment:
         self.set_networks()
         self.reset()
         self.time_dict={
-            "optimization":[],
-            "step":[],
-            "episode":[]
-                        }
+            "optimization":[], "step":[], "episode":[]}
         self.episode_length=episode_length
         self.rewards={agent.name:[] for agent in self.agents}
 
-
-
-
-    def resolve_exchanges(self)->dict:
-        """ Determines the exchange reaction mapping for the community. This mapping is required to keep track of
-        Metabolite pool change by relating exctacellular concentrations with production or consumption by the agents."""
+    def resolve_exchanges(self):
+        """
+        Determines the exchange reaction mapping for the community
+        This mapping is to keep track of metabolite pool change by relating exctacellular concentrations 
+        with production or consumption by the agents
+        """
         models=[agent.model for agent in self.agents]
         return Build_Mapping_Matrix(models)
 
-    def extract_species(self)->list:
-        """ Determines the extracellular species in the community before extracellula reactions."""
+    def extract_species(self):
+        """
+        Determines the extracellular species in the community before extracellula reactions
+        """
         species=[ag.name for ag in self.agents]
         species.extend(self.mapping_matrix["Ex_sp"])
         return species
 
-    def resolve_extracellular_reactions(self,extracellular_reactions:list[dict])->None:
-        """ Determines the extracellular reactions for the community. This method adds any new compounds required to run DFBA
-        to the system.
+    def resolve_extracellular_reactions(self,extracellular_reactions):
+        """ 
+        Determines the extracellular reactions for the community
+        This method adds any new compounds required to run DFBA to the system
         Args:
-            extracellular_reactions list[dict]: list of extracellular reactions as defined in the constructor.
+            extracellular_reactions list[dict]: list of extracellular reactions
         """
         species=[]
         [species.extend(list(item["reaction"].keys())) for item in extracellular_reactions]
@@ -319,20 +221,20 @@ class Environment:
 
 
     def reset(self):
-        """ Resets the environment to its initial state."""
+        """ 
+        Resets the environment to its initial state
+        """
         self.state = self.initial_condition.copy()
         self.rewards={agent.name:[] for agent in self.agents}
         self.time_dict={
-            "optimization":[],
-            "step":[],
-            "episode":[]
-                        }
+            "optimization":[], "step":[], "episode":[]}
 
-    def step(self)-> tuple[np.ndarray,list,list,np.ndarray]:
-        """ Performs a single DFBA step in the environment.
-        This method provides similar interface as other RL libraries: It returns:
-        current state, rewards given to each agent from FBA calculations, actions each agent took,
-        and next state calculated similar to DFBA.
+    def step(self):
+        """
+        Performs a single DFBA step in the environment
+        This method provides similar interface as other RL libraries
+        It returns current state, rewards given to each agent from FBA calculations, actions each agent took,
+        and next state calculated similar to DFBA
         """
         self.temp_actions=[]
         self.state[self.state<0]=0
@@ -371,8 +273,6 @@ class Environment:
                         dCdt[i+len(self.agents)] += Sols[j].fluxes.iloc[self.mapping_matrix["Mapping_Matrix"]
                                                     [i, j]]*self.state[j]
 
-        # Handling extracellular reactions
-
         for ex_reaction in self.extracellular_reactions:
             rate=ex_reaction["kinetics"][0](*[self.state[self.species.index(item)] for item in ex_reaction["kinetics"][1]])
             for metabolite in ex_reaction["reaction"].keys():
@@ -388,12 +288,16 @@ class Environment:
 
 
     def set_observables(self):
-        """ Sets the observables for the agents in the environment."""
+        """ 
+        Sets the observables for the agents in the environment
+        """
         for agent in self.agents:
             agent.observables=[self.species.index(item) for item in agent.observables]
 
     def set_networks(self):
-        """ Sets up the networks and optimizers for the agents in the environment."""
+        """
+        Sets up the networks and optimizers for the agents in the environment
+        """
         if self.training==True:
             for agent in self.agents:
                 agent.actor_network_=agent.actor_network(len(agent.observables)+1,len(agent.actions))
@@ -401,9 +305,9 @@ class Environment:
                 agent.optimizer_value_ = agent.optimizer_critic(agent.critic_network_.parameters(), lr=agent.lr_critic)
                 agent.optimizer_policy_ = agent.optimizer_actor(agent.actor_network_.parameters(), lr=agent.lr_actor)
 
-def Build_Mapping_Matrix(models:list[cobra.Model])->dict:
+def Build_Mapping_Matrix(models):
     """
-    Given a list of COBRA model objects, this function will build a mapping matrix for all the exchange reactions.
+    Given a list of COBRA model objects, this function will build a mapping matrix for all the exchange reactions
 
     """
 
@@ -418,20 +322,26 @@ def Build_Mapping_Matrix(models:list[cobra.Model])->dict:
 
     return {"Ex_sp": Ex_sp, "Mapping_Matrix": Mapping_Matrix}
 
-def general_kinetic(x:float,y:float)->float:
-    """A simple function implementing MM kinetics """
+def general_kinetic(x,y):
+    """
+    A simple function implementing MM kinetics
+    """
     return 0.1*x*y/(10+x)
-def general_uptake(c:float)->float:
-    """An extremely simple function for mass transfer kinetic. Only used for testing """
+def general_uptake(c):
+    """
+    An extremely simple function for mass transfer kinetic
+    """
     return 10*(c/(c+10))
 
-def mass_transfer(x:float,y:float,k:float=0.01)->float:
-    """A simple function for mass transfer kinetic """
+def mass_transfer(x,y,k=0.01):
+    """
+    A simple function for mass transfer kinetic
+    """
     return k*(x-y)
 
 @ray.remote
-def run_episode(env:Environment)->tuple:
-    """ Runs a single episode of the environment used for parallel computatuon of episodes.
+def run_episode(env):
+    """ Runs a single episode of the environment used for parallel computatuon of episodes
     """
     t_0_ep=time.time()
     batch_obs = {key.name:[] for key in env.agents}
@@ -460,7 +370,9 @@ def run_episode(env:Environment)->tuple:
     return batch_obs,batch_acts, batch_log_probs, episode_rews,env.time_dict,env.rewards
 
 def run_episode_single(env):
-    """ Runs a single episode of the environment."""
+    """
+    Runs a single episode of the environment
+    """
     batch_obs = {key.name:[] for key in env.agents}
     batch_acts = {key.name:[] for key in env.agents}
     batch_log_probs = {key.name:[] for key in env.agents}
@@ -482,8 +394,9 @@ def run_episode_single(env):
             episode_rews[ag.name].append(r[ind])
     return batch_obs,batch_acts, batch_log_probs, episode_rews
 
-def rollout(env:Environment,num_workers:int|None=None)->tuple:
-    """Performs a batch calculation in parallel using Ray library.
+def rollout(env,num_workers=None):
+    """
+    Performs a batch calculation in parallel using Ray library
     Args:
         env (Environment): The environment instance to run the episodes for
     """
@@ -495,16 +408,11 @@ def rollout(env:Environment,num_workers:int|None=None)->tuple:
     batch_log_probs={key.name:[] for key in env.agents}
     batch_rews = {key.name:[] for key in env.agents}
     batch_rtgs = {key.name:[] for key in env.agents}
-    batch_times={"step":[],
-                 "episode":[],
-                 "optimization":[],
-                 "batch":[]}
-
+    batch_times={"step":[], "episode":[], "optimization":[], "batch":[]}
     batch=[]
     env.reset()
 
     for ep in range(num_workers):
-        # batch.append(run_episode_single(env))
         batch.append(run_episode.remote(env))
     batch=ray.get(batch)
     for ep in range(num_workers):
@@ -530,52 +438,48 @@ def rollout(env:Environment,num_workers:int|None=None)->tuple:
     return batch_obs,batch_acts, batch_log_probs, batch_rtgs,batch_times,env.rewards.copy()
 
 class Simulation:
-    """This class is designed to run the final simulation for an environment and additionaly does:
-        - Saving the results given a specific interval
-        - Plotting the results
-        - calculating the duration of different parts of the code.
-        This class can be extended easily later for added functionalities such as online streaming the training results.
+    """
+    This class is designed to run the final simulation for an environment and additionaly does
+    -> Saving the results given a specific interval
+    -> Plotting the results
+    -> calculating the duration of different parts of the code
 
-        Args:
-            name (str): A descriptive name given to the simulation. This name is used to save the training files.
-            env (environment): The environment to perform the simulations in.
-            save_dir (str): The DIRECTORY to which you want to save the training results
-            overwrite (bool): Determines whether to overwrite the pickel in each saving interval create new files
-            report (dict): Includes the reported time at each step
+    Args:
+        name (str): A descriptive name given to the simulation. This name is used to save the training files
+        env (environment): The environment to perform the simulations in
+        save_dir (str): The DIRECTORY to which you want to save the training results
+        overwrite (bool): Determines whether to overwrite the pickel in each saving interval create new files
+        report (dict): Includes the reported time at each step
     """
 
-    def __init__(self,name:str,env:Environment,save_dir:str,save_every:int=200,overwrite:bool=False):
+    def __init__(self,name,env,save_dir,store_return, save_every=200,overwrite=False):
         self.name=name
         self.env=env
         self.save_dir=save_dir
+        self.store_return = store_return
         self.save_every=save_every
         self.overwrite=overwrite
         self.report={}
 
 
-    def run(self,solver:str="glpk",verbose:bool=True,initial_critic_error:float=100)->Environment:
-        """This method runs the training loop
+    def run(self,solver="glpk",verbose=True,initial_critic_error=100):
+        """
+        This method runs the training loop
 
         Args:
             solver (str): The solver to be used by cobrapy
             verbose (bool): whether to print the training results after each iteration
-            initial_critic_error (float): To make the training faster this method first trains the critic network on the first batch of episodes to
-            make the critic network produce more realistic values in the beginning. This parameter defines what is the allowable MSE of the critic network
-            on the first batch of data obtained from the evironment
+            initial_critic_error (float): To make the training faster this method first trains the critic network on the 
+            first batch of episodes to make the critic network produce more realistic values in the beginning. This parameter 
+            defines what is the allowable MSE of the critic network on the first batch of data obtained from the evironment
         Returns:
-            Environment: The trained version of the environment.
-
-            """
-
-        return_store = []
+            Environment: The trained version of the environment
+        """
+        
         t_0_sim=time.time()
         self.report={"returns":{ag.name:[] for ag in self.env.agents}}
         self.report["times"]={
-            "step":[],
-            "optimization":[],
-            "batch":[],
-            "simulation":[]
-        }
+            "step":[], "optimization":[], "batch":[], "simulation":[]}
         if not os.path.exists(os.path.join(self.save_dir,self.name)):
             os.makedirs(os.path.join(self.save_dir,self.name))
 
@@ -641,19 +545,18 @@ class Simulation:
                 print(f"Batch {batch} finished:")
                 for agent in self.env.agents:
                     print(f"{agent.name} return was:  {np.mean(self.env.rewards[agent.name][-self.env.episodes_per_batch:])}")
-                    return_store.append(np.mean(self.env.rewards[agent.name][-self.env.episodes_per_batch:]))
-
+                    self.store_return.append(np.mean(self.env.rewards[agent.name][-self.env.episodes_per_batch:]))
+                    
         self.report["times"]["simulation"].append(time.time()-t_0_sim)
-        return return_store
 
-    def plot_learning_curves(self,plot:bool=True)->go.Figure:
+    def plot_learning_curves(self,plot=True):
         """
-        This method plots the learning curve for all the agents.
+        This method plots the learning curve for all the agents
         Args:
             plot (bool): whether to render the plot as well
 
         Returns:
-            go.Figure : Returns a plotly figure for learning curves of the agents.
+            go.Figure : Returns a plotly figure for learning curves of the agents
         """
         fig = go.Figure()
         for index,agent in enumerate(self.env.agents):
@@ -688,9 +591,10 @@ class Simulation:
             fig.show()
         return fig
 
-    def print_training_times(self,draw_table:bool=True)->list[dict]:
-        """Returns a dictionary describing the simulation time at different level of the training process. You can also opt to draw a table based on this results
-        using Rich library.
+    def print_training_times(self,draw_table=True):
+        """
+        Returns a dictionary describing the simulation time at different level of the training process
+        You can also opt to draw a table based on this results using Rich library
 
         Args:
             draw_table (bool): whether to draw the table in the console
@@ -711,3 +615,9 @@ class Simulation:
             console = Console()
             console.print(table)
         return report_times
+    
+    
+"""
+The code is completely inspired from
+https://github.com/chan-csu/SPAM-DFBA.git
+"""
