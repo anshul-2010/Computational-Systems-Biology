@@ -39,6 +39,7 @@ them for desired functionalities.
 
 ## Pipeline Architecture
 Here is our proposed pipeline or the same:
+
 ![The flowchart of the described module](https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/Flowchart.jpg)
 
 ## Core Components
