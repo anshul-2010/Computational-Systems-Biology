@@ -49,13 +49,8 @@ $$\pi(a|s, \theta) = P(A_{t} = a | S_{t} = s, \theta_{t} = \theta)$$
 $$v_{\pi} = E_{\pi}[G_{t}|S_{t} = s]$$
 
 The policy function (π), as shown in the equation 1, plays a central role in RL, representing the agent’s decisionmaking strategy. It maps the given state (s) of agent to a probability distribution over possible actions (a). This function dictates the agent’s behavior and is continuously refined through the learning process to favor actions that yield higher expected rewards. The value function (v_π), as seen in equation 2, quantifies the desirability of being in that state within the context of the chosen policy. The ultimate objective of an RL agent is to maximize its return (Gt).
+$$G_{t} = \sum_{k=0}^{T} \gamma^{k}.R_{t+k+1}$$
 
-Gt =
-X
-T
-k=0
-γ
-kRt+k+1 (3)
 This metric in equation 3 represents the discounted sum of all future rewards the agent anticipates receiving from a specific state (t). The discount factor (γ) determines the importance of future rewards. Here, the inclusion of this factor ensures that long-term consequences are duly considered.
 ### Proximal Policy Optimization
 ### RL-dFBA
