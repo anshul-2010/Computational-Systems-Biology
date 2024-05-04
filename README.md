@@ -21,4 +21,19 @@ generate data on emergent properties exhibited by the simulated community. We ob
 interplay between metabolic constraints, gene regulation, and RL-driven decision-making leads
 to the emergence of complex behaviors in the community. This will provide valuable insights
 into how microbial communities function and potentially unveil new strategies for manipulating
-them for desired functionalities
+them for desired functionalities.
+
+## Table of Contents
+* [Pipeline Architecture](#pipeline-architecture)
+* []
+    * [Installation](#installation)
+    * [Usage](#usage)
+* [Contributing](optional)
+* [License](#license)
+* [Getting Help](#getting-help)
+- Pipelines
+- Data
+- Models
+- Possible future work
+
+## Pipeline Architecture
