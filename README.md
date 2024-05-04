@@ -1,22 +1,20 @@
 # Optimizing Microbial Behavior: Integrating Reinforcement Learning and Genetic Algorithms with dFBA
 
 ## Overview
-Microbial communities exhibit emergent behaviors that are difficult to predict
-from individual cell characteristics. Current modeling approaches often struggle to capture the
-interplay between metabolism, gene regulation, and collective decision-making within these
-communities. Additionally, selecting the most relevant genes for accurate dFBA modeling
-remains a challenge.
+Microbial communities exhibit emergent behaviors that are difficult to predict from individual cell characteristics. Current modeling approaches often struggle to capture the interplay between metabolism, gene regulation, and collective decision-making within these communities. Several works consider this interplay between metabolic processes and gene regulation to capture the intricate mechanisms governing metabolic reactions. Few of the approaches incorporate a set of flexible logic rules for gene regulation into a metabolic model. While integrating the gene regulation with metabolic modeling offers a more comprehensive understanding of microbial communities, it presents significant challenges for capturing long-term adaptation strategies. Existing approaches often prioritize immediate metabolic optimization. Focus on short-term efficiency may not adequately represent the dynamics and trade-offs needed to thrive in fluctuating environments. Additionally, selecting the most relevant genes for accurate dFBA modeling remains a challenge.
 
 ## Table of Contents
 * [Brief of or Work](#brief-work)
 * [Pipeline Architecture](#pipeline-architecture)
-* []
-    * [Installation](#installation)
-    * [Usage](#usage)
+* [Core components in the framework](#core-components)
+    * [Reinforcement Learning](#reinforcement-learning)
+    * [ Proximal Policy Optimization](#proximal-policy-optimization)
+    * [Reinforcement Learning (RL) - Dynamic Flux Balance Analysis (dFBA)](#rl-dfba)
+    * [Gene Regulatory Boolean Networks](#gene-regulatory-boolean-networks)
+    * [Genetic Algorithms](#genetic-algorithms)
 * [Contributing](optional)
 * [License](#license)
 * [Getting Help](#getting-help)
-- Pipelines
 - Data
 - Models
 - Possible future work
@@ -40,4 +38,26 @@ into how microbial communities function and potentially unveil new strategies fo
 them for desired functionalities.
 
 ## Pipeline Architecture
+Here is our proposed pipeline or the same:
 ![The flowchart of the described module](https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/Flowchart.jpg)
+
+## Core Components
+### Reinforcement Learning
+Reinforcement Learning (RL) offers a powerful framework for training agents to learn optimal decision-making strategies through interaction with an environment. An agent, within this paradigm, is an active learner that explores its environment and selects the set of actions that maximize the desired rewards. The environment encompasses the external world surrounding the agent, proving the state information and responding to agent’s actions. 
+$$\pi(a|s, \theta) = P(A_{t} = a | S_{t} = s, \theta_{t} = \theta)$$
+$$v_{\pi} = E_{\pi}[G_{t}|S_{t} = s]$$
+
+The policy function (π), as shown in the equation 1, plays a central role in RL, representing the agent’s decisionmaking strategy. It maps the given state (s) of agent to a probability distribution over possible actions (a). This function dictates the agent’s behavior and is continuously refined through the learning process to favor actions that yield higher expected rewards. The value function (v_π), as seen in equation 2, quantifies the desirability of being in that state within the context of the chosen policy. The ultimate objective of an RL agent is to maximize its return (Gt).
+
+Gt =
+X
+T
+k=0
+γ
+kRt+k+1 (3)
+This metric in equation 3 represents the discounted sum of all future rewards the agent anticipates receiving from a specific state (t). The discount factor (γ) determines the importance of future rewards. Here, the inclusion of this factor ensures that long-term consequences are duly considered.
+### Proximal Policy Optimization
+### RL-dFBA
+### Gene Regulatory Boolean Networks
+### Genetic Algorithms
+
