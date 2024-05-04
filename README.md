@@ -37,4 +37,4 @@ them for desired functionalities.
 - Possible future work
 
 ## Pipeline Architecture
-![The flowchart of the described module](c:\Users\Dell\Downloads\Flowchart.jpg)
+![The flowchart of the described module](https://github.com/anshul-2010/Computational-Systems-Biology/images/display/Flowchart.jpg)
