@@ -37,3 +37,4 @@ them for desired functionalities.
 - Possible future work
 
 ## Pipeline Architecture
+![The flowchart of the described module](c:\Users\Dell\Downloads\Flowchart.jpg)
