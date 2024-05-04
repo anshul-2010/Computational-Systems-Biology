@@ -6,6 +6,22 @@ from individual cell characteristics. Current modeling approaches often struggle
 interplay between metabolism, gene regulation, and collective decision-making within these
 communities. Additionally, selecting the most relevant genes for accurate dFBA modeling
 remains a challenge.
+
+## Table of Contents
+* [Brief of or Work](#brief-work)
+* [Pipeline Architecture](#pipeline-architecture)
+* []
+    * [Installation](#installation)
+    * [Usage](#usage)
+* [Contributing](optional)
+* [License](#license)
+* [Getting Help](#getting-help)
+- Pipelines
+- Data
+- Models
+- Possible future work
+
+## Brief Work
 This study proposes a novel framework that combines three methods, dynamic flux balance
 analysis for metabolic modeling, boolean networks for capturing gene regulatory interactions,
 and reinforcement learning to simulate microbial decision-making. A key innovation is the
@@ -22,19 +38,6 @@ interplay between metabolic constraints, gene regulation, and RL-driven decision
 to the emergence of complex behaviors in the community. This will provide valuable insights
 into how microbial communities function and potentially unveil new strategies for manipulating
 them for desired functionalities.
-
-## Table of Contents
-* [Pipeline Architecture](#pipeline-architecture)
-* []
-    * [Installation](#installation)
-    * [Usage](#usage)
-* [Contributing](optional)
-* [License](#license)
-* [Getting Help](#getting-help)
-- Pipelines
-- Data
-- Models
-- Possible future work
 
 ## Pipeline Architecture
 ![The flowchart of the described module](https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/Flowchart.jpg)
