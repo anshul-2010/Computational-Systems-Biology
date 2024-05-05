@@ -1,7 +1,7 @@
 ## Gene Regulatory Boolean Network
 Our approach for enhancing exploration and convergence within RL-dFBA with gene regulation lies in utilization of attractor states derived from a gene regulatory network (GRN). A GRN represents the intricate web of interactions between the genes, where nodes represent individual genes and edges depict their regulatory influences. By simplifying this network into a boolean model, where genes can be either on or off, we can identify stable configurations of gene expression known as attractor states. The proposition here focuses on employing these attractor states as the initial population for a genetic algorithm (GA) used within the RL-dFBA framework with gene regulation. The proposed pipeline to obtain this is shown below:
 
-![Gene regulatory boolean network](https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/GRN_Boolean.jpg)
+![Gene regulatory boolean network](https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/GRN_Boolean.png)
 
 Random initialization, commonly used in GAs, can lead to exploration of a vast and potentially irrelevant search space. By leveraging attractor states as starting points, exploration becomes directed towards regions of the search space with welldefined regulatory configurations and their corresponding metabolic outcomes. This targeted approach has the potential to significantly reduce the time required to converge to a solution.
 
