@@ -7,4 +7,8 @@ Within the domain of RL, policy gradient algorithms offer a compelling approach.
 
 Incorporating these elements into our framework led to the stabilization of the training process. In our current framework, we have neural networks, each composed of 10 linear layers and a tanh activation function for both the policy function (actor network) and the value function (critic network). The interaction between the actor and critic models within the environment is visually depicted below. We have chosen the Adam optimizer for the training. This combination of PPO leads to a robust learning in microbial optimization framework.
 
-<img src="https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/Actor_Critic.png" alt="drawing" width="350"/>
+<img src="https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/Actor_Critic.png" alt="Actor Critic model" width="350"/>
+
+In order to guide these decisions, RL-dFBA employs a policy function. With this function, each agent is essentially  regulating a subset of fluxes, at every state, within its metabolic network. By imposing the constraints on reaction flux bounds, the policy function essentially allows agents to dynamically adjust their metabolism based on their own surroundings. The framework facilitates parallel simulations using the current policy. After a batch of episodes concludes, a two-step update process refines the policy. First, the critic network (value function) is updated based on the values of state and reward that have been accumulated. Next, the actor network (policy function) is updated using PPO to improve its decision-making. This iterative exploration-exploitation process empowers the agent to select actions that maximize their rewards within the feasible solution space.
+
+<img src="https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/RL-dFBA.png" alt="RL-dFBA working" width="500"/>
