@@ -1,9 +1,6 @@
-from nn import NN
 from mapping_matrix import general_uptake
-from distutils.log import warn
 import numpy as np
 import torch
-import torch.nn as nn
 from torch.distributions import Normal
 
 class Agent:
