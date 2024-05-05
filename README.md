@@ -55,7 +55,7 @@ This metric in equation 3 represents the discounted sum of all future rewards th
 
 ### Proximal Policy Optimization
 A significant challenge arises when the underlying mathematical operations within the environment involve linear programming (LP) problems, as is the case with dFBA in our framework. The actions recommended by the policy function can fall outside the feasible region of the LP, hindering the training process.
-$$L_{CLIP}(\theta) =  \hat_{E_{t}}$$
+$$L_{CLIP}(\theta) =  {E_{t}}$$
 L
 CLIP (θ) = Eˆ
 t[min(rt(θ)Aˆ
