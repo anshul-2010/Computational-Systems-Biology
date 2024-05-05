@@ -1,7 +1,9 @@
 ## Genetic Algorithm
 Genetic algorithms (GAs) are a powerful class of optimization algorithms inspired by the principles of natural selection. They operate on a population of candidate solutions and iteratively improve them through a process that mimics biological evolution. It begins with the representation, where each candidate solution within the population is encoded as a chromosome. In the context of our discussion, the chromosome might represent a specific gene expression profile, where each gene is encoded as either on or off. The genetic algorithm is shown below:
 
-![Genetic algorithm](https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/genetic_algorithm.png)
+<img src="https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/genetic_algorithm.png" alt="Genetic algorithm overflow" width="500"/>
+
+![Genetic algorithm]()
 
 The GA starts with an initial population of chromosomes, which can be randomly generated or seeded with specific solutions if prior knowledge exists. A fitness function is defined to evaluate the performance of each individual within the population. This function assigns a higher score to solutions that are closer to the desired outcome. In our case, the fitness function might evaluate the performance of a particular gene expression profile within the RL-dFBA framework, potentially using the accumulated return as the fitness score. Individuals with higher fitness scores are more likely to be selected for reproduction. This selection process ensures that successful traits are propagated to the next generation. Various selection techniques exist, such as the roulette wheel selection or tournament selection. Selected individuals undergo a process call crossover, where genetic material is exchanged to create offspring. Different crossover operations exist, such as single-point crossover or two-point crossover.
 
