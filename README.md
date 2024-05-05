@@ -12,8 +12,7 @@ Microbial communities exhibit emergent behaviors that are difficult to predict f
     * [Reinforcement Learning (RL) - Dynamic Flux Balance Analysis (dFBA)](#rl-dfba)
     * [Gene Regulatory Boolean Networks](#gene-regulatory-boolean-networks)
     * [Genetic Algorithms](#genetic-algorithms)
-* [Results](results)
-* [Possible Future Work](#future-work)
+* [Simulation](simulation)
 
 ## Brief Work
 This study proposes a novel framework that combines three methods, dynamic flux balance
@@ -72,9 +71,11 @@ Attractor states represent more biologically feasible configurations of gene exp
 GAs mimic natural selection to optimize solutions. In our case, they help identify the best gene expression profiles for the RL-DFBA framework. Each solution (chromosome) represents a gene expression profile (genes on/off). We start with a set of randomly generated profiles (or potentially using attractors from the Boolean network). We evaluate each profile using the RL-DFBA framework (e.g., accumulated return). Profiles leading to better outcomes receive higher fitness scores. High-scoring profiles are more likely to be chosen for reproduction (e.g., tournament selection). Selected profiles exchange genetic material (single-point crossover) to create new offspring. Random changes (flips) are introduced to some offspring with low probability to maintain diversity. New offspring partially replace the old population, forming the next generation. Steps 3-7 repeat until a stopping criterion is met (e.g., max generations, desired fitness, or no improvement). This process allows the GA to evolve gene expression profiles that lead to better performance within the RL-DFBA framework.
 $$Population: \quad P_{t} = \{x_{1}^{t}, x_{2}^{t}, ...., x_{n}^{t}\}$$
 $$Binary Encoding: \quad x_{i}^{t} = \langle b_{1}^{i}, b_{2}^{i}, ...., b_{l}^{i} \rangle$$
-$$Fitness Function: \quad f : X -> R, f = rl\textunderscore dfba(x_{i}^{t})$$
+$$Fitness Function: \quad f : X \rightarrow R, f = rl\textunderscore dfba(x_{i}^{t})$$
 
-## Results
+## Simulation
+The experimental setup includes a set of hyper-parameters, which are, time-step for the simulation (0.1), number
+of time-steps per episode (100), and number of batches for training (10). The agent configuration includes the
+metabolic reaction network model, observables which include the internal state of the agent itself, and the "glu D e" which represents the concentration of extracellular glucose. The agent’s action suggests the objective function of the method is to maximize biomass optimization. This is typically the environment setup of the system. 
 
-## Future Work
-
+From the gene regulatory network perspective, we took a sub-network of metabolic network, representing a set of key metabolic reactions. Using the gene regulation rules, we identify the genes that regulate the enzymes involved in these reactions. Boolean network modeling was employed to capture the regulatory interactions among the genes, defining a genotype space with 25 possible combinations representing different gene expression profiles. Attractor states were obtained from this network using simulation tools.
