@@ -5,7 +5,7 @@ The experimental setup includes a set of hyper-parameters, which are, **time-ste
 
 From the gene regulatory network perspective, we took a sub-network of metabolic network, representing a set of key metabolic reactions. Using the gene regulation rules, we identify the genes that regulate the enzymes involved in these reactions. Boolean network modeling was employed to capture the regulatory interactions among the genes, defining a genotype space with 25 possible combinations representing different gene expression profiles. Attractor states were obtained from this network using simulation tools.
 
-### ITP metabolic reaction sub-network
+### GTP metabolic reaction sub-network
 * An important result observed was the impact of the action space size on performance. The effectiveness of the RL-dFBA agent was observed to be influenced by the size of the action space (the number of genes being regulated). When the GA focused on genes with a limited impact on the metabolic network (not controlling a large set of reactions), the RL-dFBA agent was able to efficiently navigate the action space with available computational resources. This resulted in a good alignment between biomass optimization obtained by the RL-dFBA agent and single gene deletion analysis using the dFBA. We notice that the return in each case is almost similar, indicating that deletion of any of the genes independently will hardly influence the others.
 
 | Gene states      | Average return                              |
@@ -20,7 +20,7 @@ From the gene regulatory network perspective, we took a sub-network of metabolic
 | `10001`          |  7.281996427350315                          |
 | `10111`          |  7.281996427350295                          |
 
-### GTP metabolic reaction sub-network
+### ITP metabolic reaction sub-network
 * However, when the GA targeted genes regulating a wider range of reactions (lethal genes included), the RL-dFBA agent encounters challenges in navigating the larger action space with limited computational resources. We notice a consistent score close to -100. This led to a disconnect between the ordering of biomass optimization by the RL-dFBA agent and single gene deletion. Also, in such case, only those specific genes showed deviation, while the rest followed. This also highlights the potential need for incorporating additional information into the observable state of the RL agent. We notice that the return in each case is completely different, indicating that deletion of any of the genes no longer bears a close relation with one another.
 
 | Gene states      | Average return                              |
