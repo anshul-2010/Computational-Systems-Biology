@@ -1,7 +1,6 @@
 """
 Incomplete attempt to incorporate the RL agent for gene regulation
-"""
-
+""" 
 import numpy as np
 
 all_states = [i for i in range(2**3)]
