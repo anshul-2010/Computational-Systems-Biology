@@ -7,7 +7,7 @@ The GA starts with an initial population of chromosomes, which can be randomly g
 
 With a low probability, random mutations are introduced into the genetic makeup. It helps maintain diversity in the population and prevents premature convergence towards a local optimum. Different mutation operators can be employed, such as bit-flip mutation for binary encoded chromosomes. A new generation of individuals is formed by combining the offspring with a portion of the parent population. The GA continues iterating through these steps until a termination criterion is met. This criterion could be reaching a defined number of generations, achieving a desired fitness level, or observing stagnation in the improvement of the population.
 
-'''
+```
 Algorithm 1 Genetic Algorithm
 Require: Initial population and max number of generations to run
 the algorithm. Also, tournament selection method is the selection
@@ -32,6 +32,6 @@ between the parents
 13: Replace the old population with the new generated off-springs
 14: OUTPUT
 15: Calcuate the best individual in the population and return it
-'''
+```
 
 GAs excel at exploring the search space for promising solutions. By leveraging attractor states from the gene regulatory network as the initial population, this exploration can be further directed towards biologically relevant regions of the search space. GAs are also adept at handling complex search spaces and avoid getting trapped in local optima. This is particularly beneficial for RL-dFBA with gene regulation, where the interaction between gene expression and metabolic behavior can lead to intricate fitness landscapes.
