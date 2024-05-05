@@ -55,21 +55,9 @@ This metric in equation 3 represents the discounted sum of all future rewards th
 
 ### Proximal Policy Optimization
 A significant challenge arises when the underlying mathematical operations within the environment involve linear programming (LP) problems, as is the case with dFBA in our framework. The actions recommended by the policy function can fall outside the feasible region of the LP, hindering the training process.
-$$L_{CLIP}(\theta) =  {E_{t}}$$
-L
-CLIP (θ) = Eˆ
-t[min(rt(θ)Aˆ
-t, clip(rt(θ), 1 − ϵ, 1 + ϵ)Aˆ
-t)](4)
-PPO, introduced by Schulman et al. (2017), addresses this
-challenge by introducing the concept of policy proximity.
-This approach strives to mitigate abrupt changes in the
-policy space during updates, ensuring the suggested actions remain within the feasible region of the LP problem.
-The core principle lies in utilizing a surrogate objective
-function, as seen in equation 4. This function essentially
-compels the policy to prioritize actions that yield higher
-returns while maintaining a degree of similarity to the
-previous policy.
+$$L_{CLIP}(\theta) =  \hat{E_{t}}[min(r_{t}(\theta), 1 - \epsilon, 1 + \epsilon)\hat{A_{t}}]$$
+
+PPO addresses this challenge by introducing the concept of policy proximity. This approach strives to mitigate abrupt changes in the policy space during updates, ensuring the suggested actions remain within the feasible region of the LP problem. The core principle lies in utilizing a surrogate objective function, as seen in equation 4. This function essentially compels the policy to prioritize actions that yield higher returns while maintaining a degree of similarity to the previous policy.
 
 ### RL-dFBA
 ### Gene Regulatory Boolean Networks
