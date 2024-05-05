@@ -69,7 +69,7 @@ Our approach for enhancing exploration and convergence within RL-dFBA with gene 
 of attractor states derived from a gene regulatory network (GRN). A GRN represents the intricate web of interactions
 between the genes, where nodes represent individual genes and edges depict their regulatory influences. By simplifying this network into a boolean model, where genes can be either on or off, we can identify stable configurations of gene expression known as attractor states. The attractors can fall into one of the below two categories.
 $$Fixed Point Attractors: s_{t+1} = s_{t} \forall t \geq t_{0}$$
-$$Cyclic Attractors: s_{t+p} = s_{t} for some positive integer p$$
+$$Cyclic Attractors: s_{t+p} = s_{t} for p \in Z^{+}$$
 Attractor states represent more biologically feasible configurations of gene expression. Utilizing them ensures that the ahead steps operate within a biological relevant space.
 
 ### Genetic Algorithms
