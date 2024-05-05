@@ -8,14 +8,13 @@ The GA starts with an initial population of chromosomes, which can be randomly g
 With a low probability, random mutations are introduced into the genetic makeup. It helps maintain diversity in the population and prevents premature convergence towards a local optimum. Different mutation operators can be employed, such as bit-flip mutation for binary encoded chromosomes. A new generation of individuals is formed by combining the offspring with a portion of the parent population. The GA continues iterating through these steps until a termination criterion is met. This criterion could be reaching a defined number of generations, achieving a desired fitness level, or observing stagnation in the improvement of the population.
 
 ```
-****ALGORITHM 1****: **GENETIC ALGORITHM**
-Require: Initial population and max number of generations to run
-the algorithm. Also, tournament selection method is the selection
-method incorporated. Single-point crossover and flip mutations
-are used.
-1: INITIALIZATION
-population L99 Initialize-Population(population size)
-2: while individual len(population) do
+ALGORITHM 1: GENETIC ALGORITHM
+Require: Initial population and max number of generations to run the algorithm. Also, tournament selection method is the selection method incorporated. Single-point crossover and flip mutations are used.
+
+1: Initialization
+population <-- Initialize-Population(population size)
+
+2: while (individual < len(population)) do
 Randomly Initialize population or Take the attractors’ from
 the boolean network.
 3: end while
