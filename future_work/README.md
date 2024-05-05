@@ -1,15 +1,11 @@
-## Model: iJO1366
+## Future Work
+In this current approach, the gene regulation is performed in a primitive fashion, whereby we only regulate the production of enzymes by turning the genes on/off. However, if we need to regulate the genes, it needs to be done in a more efficient manner by studing the regulation of transcription factors and then selecting the genes that need to be upregulated or downregulated. This information, when appended with the RL model, has capability to be able to perform a complete end-to-end study on gene regulation of metabolic model.
 
-### Organism: Escherichia coli str. K-12 substr. MG1655
+The current study utilizes a GA iteratively to select promising gene regulation strategies. An intriguing future direction involves integrating the GA directly into the framework by encoding it as a separate evolutionary layer within RL agent. This would enable co-evolution of RL agents’ policy network and the GA’s selection criteria. During training, both the policy network and the selection criteria would be subject to evolutionary pressures, leading to a more efficient search process.
 
-### Model Metrics:
+To model the gene regulation, our current framework utilizes the GRN network. A future direction involves exploring the phenotype-genotype clustering techniques to analyze the relationship between specific gene expression profiles and underlying genetic configurations. Also, in our approach, we use a standard GA for identifying promising gene regulation strategies. Future research could explore the benefits of employing different GA variants, such as niching algorithms or steady-state GAs. These methods mainly differ in terms of how the genotype space is explored.
 
-| Component     | Count             |
-| :-----------: | :---------------: |
-| `Metabolites` | 1805              |
-| `Reactions`   | 2583              |
-| `Genes`       | 1367              |
-
-### Escher Map:
-
-<img src="https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/escher_map.png" alt="Escher Map for iJO1366" width="700"/>
+One promising direction is to incorporate a mixture of experts approach within the neural network architecture of the actor critic networks. This way, when posed with a differential learning scenario, the model is capable of dynamically selecting the appropriate model based on the perceived urgency of the environment change.
+$$Expert function: \quad f_{i}(x) -> y_{i}$$
+$$Gating Network: \quad g(x) -> w = (w_{1}, w_{2}, w_{3}, ...., w_{N})$$
+$$MoE Prediction: \quad y = \sum w_{i} * f_{i}(x)$$
