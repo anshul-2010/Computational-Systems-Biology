@@ -9,7 +9,8 @@ With a low probability, random mutations are introduced into the genetic makeup.
 
 ```
 ALGORITHM 1: GENETIC ALGORITHM
-Require: Initial population and max number of generations to run the algorithm. Also, tournament selection method is the selection method incorporated. Single-point crossover and flip mutations are used.
+Require: Initial population and max number of generations to run the algorithm. Also, tournament selection method 
+         is the selection method incorporated. Single-point crossover and flip mutations are used.
 
 1: Initialization
     population <-- Initialize-Population(population size)
