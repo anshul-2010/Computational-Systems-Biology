@@ -7,6 +7,4 @@ Within the domain of RL, policy gradient algorithms offer a compelling approach.
 
 Incorporating these elements into our framework led to the stabilization of the training process. In our current framework, we have neural networks, each composed of 10 linear layers and a tanh activation function for both the policy function (actor network) and the value function (critic network). The interaction between the actor and critic models within the environment is visually depicted below. We have chosen the Adam optimizer for the training. This combination of PPO leads to a robust learning in microbial optimization framework.
 
-![Actor Critic Model](https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/Actor_Critic.png)
-
-<img src="https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/Actor_Critic.png" alt="drawing" width="100"/>
+<img src="https://github.com/anshul-2010/Computational-Systems-Biology/blob/main/images/display/Actor_Critic.png" alt="drawing" width="1000"/>
