@@ -68,8 +68,8 @@ RL-dFBA is approach for optimizing microbial system’s network by leveraging th
 Our approach for enhancing exploration and convergence within RL-dFBA with gene regulation lies in utilization
 of attractor states derived from a gene regulatory network (GRN). A GRN represents the intricate web of interactions
 between the genes, where nodes represent individual genes and edges depict their regulatory influences. By simplifying this network into a boolean model, where genes can be either on or off, we can identify stable configurations of gene expression known as attractor states. The attractors can fall into one of the below two categories.
-$$Fixed Point Attractors: s_{t+1} = s_{t} \quad \forall t \geq t_{0}$$
-$$Cyclic Attractors: s_{t+p} = s_{t} \quad for p \in Z^{+}$$
+$$Fixed Point Attractors: s_{t+1} = s_{t} \quad \forall \quad t \geq t_{0}$$
+$$Cyclic Attractors: s_{t+p} = s_{t} \quad for \quad p \in Z^{+}$$
 Attractor states represent more biologically feasible configurations of gene expression. Utilizing them ensures that the ahead steps operate within a biological relevant space.
 
 ### Genetic Algorithms
