@@ -18,7 +18,7 @@ We have considered two subsets of gene regulatory networks which are:
 * GTP metabolic reaction sub-network
 
 | Reaction IDs     | Reaction Names                              | Regulating Genes (IDs)             |
-| ---------------- | ------------------------------------------- | ---------------------------------- |
+| :--------------: | :-----------------------------------------: | :--------------------------------: |
 | `GTPtex`         | GTP transport via diffusion                 | `b0929 or b1377 or b2215 or b0241` |
 | `NTP3pp`         | Nucleoside Triphosphatase                   | `b0929 or b1377 or b2215 or b0241` |
 | `GDPtex`         | GDP transport via diffusion                 | `b0980`                            |
