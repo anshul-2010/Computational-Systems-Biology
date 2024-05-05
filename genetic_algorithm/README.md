@@ -12,23 +12,23 @@ ALGORITHM 1: GENETIC ALGORITHM
 Require: Initial population and max number of generations to run the algorithm. Also, tournament selection method is the selection method incorporated. Single-point crossover and flip mutations are used.
 
 1: Initialization
-population <-- Initialize-Population(population size)
+    population <-- Initialize-Population(population size)
 
 2: while (individual < len(population)) do
-Randomly Initialize population or Take the attractors’ from
-the boolean network.
+    Randomly Initialize population or Take the attractors’ from the boolean network.
 3: end while
-4: LOOP (GENERATION LOOP)
-5: while generation max gen+1 do
-6: Choose parents based on the fitness function (RL-DFBA)
-7: for child=0, child population size / 2, child ++ do
-8: Select the pair of parents and perform single point crossover
-between the parents
-9: Mutate(child1) with low probability
-10: Mutate(child2) with low probability
-11: end for
+
+4: Lopp (Generation Loop)
+5: while (generation < max(gen)+1) do
+6:   Choose parents based on the fitness function (RL-DFBA)
+7:   for (child=0, child < population size / 2, child ++) do
+8:     Select the pair of parents and perform single point crossover between the parents
+9:   Mutate(child1) with low probability
+10:  Mutate(child2) with low probability
+11:  end for
 12: end while
 13: Replace the old population with the new generated off-springs
+
 14: OUTPUT
 15: Calcuate the best individual in the population and return it
 ```
