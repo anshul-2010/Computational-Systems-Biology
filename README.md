@@ -12,12 +12,8 @@ Microbial communities exhibit emergent behaviors that are difficult to predict f
     * [Reinforcement Learning (RL) - Dynamic Flux Balance Analysis (dFBA)](#rl-dfba)
     * [Gene Regulatory Boolean Networks](#gene-regulatory-boolean-networks)
     * [Genetic Algorithms](#genetic-algorithms)
-* [Contributing](optional)
-* [License](#license)
-* [Getting Help](#getting-help)
-- Data
-- Models
-- Possible future work
+* [Results](results)
+* [Possible Future Work](#future-work)
 
 ## Brief Work
 This study proposes a novel framework that combines three methods, dynamic flux balance
@@ -77,3 +73,8 @@ GAs mimic natural selection to optimize solutions. In our case, they help identi
 $$Population: \quad P_{t} = \{x_{1}^{t}, x_{2}^{t}, ...., x_{n}^{t}\}$$
 $$Binary Encoding: \quad x_{i}^{t} = \langle b_{1}^{i}, b_{2}^{i}, ...., b_{l}^{i} \rangle$$
 $$Fitness Function: \quad f : X -> R, f = rl\textunderscore dfba(x_{i}^{t})$$
+
+## Results
+
+## Future Work
+
