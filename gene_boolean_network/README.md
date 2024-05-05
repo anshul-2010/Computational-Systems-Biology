@@ -8,21 +8,34 @@ Attractor states represent more biologically feasible configurations of gene exp
 We have considered two subsets of gene regulatory networks which are:
 * ITP metabolic reaction sub-network
 
-| ---------------- | ------------------------------------------- | ---------------------------------- |\\
-| Reaction IDs     | Reaction Names                              | Regulating Genes (IDs)             |\\
-| ---------------- | ------------------------------------------- | ---------------------------------- |\\
-| `NTP 10`         | Nucleoside Triphosphatase                   | `b0474`                            |\\
-| `ATPHs`          | ATP adenine hydrolysis                      | `s0001`                            |\\
-| `ADK4`           | Adenylate Kinase                            | `b2954`                            |\\
-| `NTPP 9`         | Nucleoside Triphosphate Pyrophosphorylase   | `b4161 or b4394`                   |\\
-| ---------------- | ------------------------------------------- | ---------------------------------- |\\
+| ---------------- | ------------------------------------------- | ---------------------------------- |
+
+| Reaction IDs     | Reaction Names                              | Regulating Genes (IDs)             |
+
+| ---------------- | ------------------------------------------- | ---------------------------------- |
+
+| `NTP 10`         | Nucleoside Triphosphatase                   | `b0474`                            |
+
+| `ATPHs`          | ATP adenine hydrolysis                      | `s0001`                            |
+
+| `ADK4`           | Adenylate Kinase                            | `b2954`                            |
+
+| `NTPP 9`         | Nucleoside Triphosphate Pyrophosphorylase   | `b4161 or b4394`                   |
+
+| ---------------- | ------------------------------------------- | ---------------------------------- |
 
 * GTP metabolic reaction sub-network
 
-| ---------------- | ------------------------------------------- | ---------------------------------- |\\
-| Reaction IDs     | Reaction Names                              | Regulating Genes (IDs)             |\\
-| ---------------- | ------------------------------------------- | ---------------------------------- |\\
-| `GTPtex`         | GTP transport via diffusion                 | `b0929 or b1377 or b2215 or b0241` |\\
-| `NTP3pp`         | Nucleoside Triphosphatase                   | `b0929 or b1377 or b2215 or b0241` |\\
-| `GDPtex`         | GDP transport via diffusion                 | `b0980`                            |\\
-| ---------------- | ------------------------------------------- | ---------------------------------- |\\
+| ---------------- | ------------------------------------------- | ---------------------------------- |
+
+| Reaction IDs     | Reaction Names                              | Regulating Genes (IDs)             |
+
+| ---------------- | ------------------------------------------- | ---------------------------------- |
+
+| `GTPtex`         | GTP transport via diffusion                 | `b0929 or b1377 or b2215 or b0241` |
+
+| `NTP3pp`         | Nucleoside Triphosphatase                   | `b0929 or b1377 or b2215 or b0241` |
+
+| `GDPtex`         | GDP transport via diffusion                 | `b0980`                            |
+
+| ---------------- | ------------------------------------------- | ---------------------------------- |
