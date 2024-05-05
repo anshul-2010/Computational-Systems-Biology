@@ -30,7 +30,7 @@ Require: Initial population and max number of generations to run the algorithm. 
 12: end while
 13: Replace the old population with the new generated off-springs
 
-14: OUTPUT
+14: Output
 15: Calcuate the best individual in the population and return it
 ```
 
