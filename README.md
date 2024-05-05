@@ -62,6 +62,15 @@ $$r_{t}(\theta) = \frac{\pi_{\theta}(a_{t}|s_{t})}{\pi_{\theta_{old}}(a_{t}|s_{t
 PPO addresses this challenge by introducing the concept of policy proximity. This approach strives to mitigate abrupt changes in the policy space during updates, ensuring the suggested actions remain within the feasible region of the LP problem. The core principle lies in utilizing a surrogate objective function, as seen in equation 4. This function essentially compels the policy to prioritize actions that yield higher returns while maintaining a degree of similarity to the previous policy.
 
 ### RL-dFBA
+RL-dFBA is approach for optimizing microbial system’s network by leveraging the power of dynamic learning. This framework is operated within the context of dFBA simulations, where microbial community is represented by individual agent. The agent is equipped with a metabolic model, which encapsulates its inherent metabolic capabilities. The core concept of this framework revolves around episodes. These episodes represent defined periods within the dFBA simulation. As the simulation progresses through an episode, agents encounter discrete time points, each signifying a distinct state. At each state, the agents actively perceive their surrounding environment by sensing concentrations of very specific extracellular metabolites. This information serves as the foundation for their decision-making processes.
+
 ### Gene Regulatory Boolean Networks
+Our approach for enhancing exploration and convergence within RL-dFBA with gene regulation lies in utilization
+of attractor states derived from a gene regulatory network (GRN). A GRN represents the intricate web of interactions
+between the genes, where nodes represent individual genes and edges depict their regulatory influences. By simplifying this network into a boolean model, where genes can be either on or off, we can identify stable configurations of gene expression known as attractor states. The attractors can fall into one of the below two categories.
+$$Fixed Point Attractors: s_{t+1} = s_{t} \forall t \geq t_{0}$$
+$$Cyclic Attractors: s_{t+p} = s_{t} for some positive integer p$$
+Attractor states represent more biologically feasible configurations of gene expression. Utilizing them ensures that the ahead steps operate within a biological relevant space.
+
 ### Genetic Algorithms
 
